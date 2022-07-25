@@ -1,10 +1,10 @@
 {
-    "name": "dhrechanyi/activecampaign-api-v3-wrapper",
-    "description": "Wrapper for ActiveCampaing API v3, which allows to work with their services, using PHP",
+    "name": "treehousetim/activecampaign-api-v3-wrapper",
+    "description": "PHP SDK ActiveCampaign API v3",
     "type": "library",
     "require": {
         "ext-json": "*",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "*"
     },
     "require-dev": {
     },
@@ -13,12 +13,19 @@
         {
             "name": "Denys Hrechanyi",
             "email": "dhrechanyi@gmail.com"
+        },
+        {
+            "name": "Tim Gallagher",
+            "email": "treehousetim@gmail.com"
+        },
+        {
+            "name": "Be IT Safe",
+            "email": "info@beitsafe.com"
         }
     ],
     "autoload": {
       "psr-4": {
-        "Dhrechanyi\\ActiveCampaign\\": "src/",
-        "GuzzleHttp\\": "src/"
+        "treehousetim\\ActiveCampaign\\": "src/"
       }
     }
 }
