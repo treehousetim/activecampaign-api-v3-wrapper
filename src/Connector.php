@@ -13,20 +13,21 @@ class Connector
 
 	protected $base_url;
 	protected $api_key;
-	protected $paginate_params;
-	protected $filter_params;
-	protected $query_params;
-	protected $orderby_params;
+	protected $paginate_params = [];
+	protected $filter_params = [];
+	protected $query_params = [];
+	protected $orderby_params = [];
 
 
-	public function __construct($base_url, $api_key)
+	public function __construct( $base_url = null, $api_key = null )
 	{
-		$this->api_key			= $api_key;
-		$this->base_url 		= rtrim($base_url, '/') . '/';
-		$this->paginate_params 	= [];
-		$this->filter_params 	= [];
-		$this->query_params 	= [];
-		$this->orderby_params 	= [];
+		$this->base_url = rtrim( $base_url ?? getenv( 'ACTIVE_CAMPAIGN_URL' ), '/' ) . '/';
+		$this->api_key = $api_key ?? getenv( 'ACTIVE_CAMPAIGN_KEY' );
+
+		if( $this->base_url === null || $this->api_key === null )
+		{
+			throw new \Exception( 'Pass configuration or set env vars for ACTIVE_CAMPAIGN_URL and ACTIVE_CAMPAIGN_KEY' );
+		}
 	}
 
 	public function paginate($limit, $offset = 0)
@@ -70,21 +71,12 @@ class Connector
 
 	protected function request($method, $endpoint, $data = [])
 	{
-		try {
-			$client		= new Client(['headers' => ['Api-Token' => $this->api_key]]);
-			$url		= $this->buildUrl($endpoint);
-			$options	= !empty($data) ? ['json' => $data] : [];
-			$request 	= $client->request($method, $url, $options);
+		$client		= new Client(['headers' => ['Api-Token' => $this->api_key]]);
+		$url		= $this->buildUrl($endpoint);
+		$options	= !empty($data) ? ['json' => $data] : [];
+		$request 	= $client->request($method, $url, $options);
 
-			return json_decode($request->getBody()->getContents(), true);
-
-		} catch (ClientException $exception) {
-			 echo $exception->getMessage();
-		} catch (ServerException $exception) {
-			 echo $exception->getMessage();
-		}
-
-		die;
+		return json_decode($request->getBody()->getContents(), true);
 	}
 
 
