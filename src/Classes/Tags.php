@@ -1,11 +1,6 @@
-<?php
+<?php namespace treehousetim\ActiveCampaign\Classes;
 
-namespace Dhrechanyi\ActiveCampaign\Classes;
-
-use Dhrechanyi\ActiveCampaign\Connector;
-
-
-class Tags extends Connector
+class Tags extends \treehousetim\ActiveCampaign\Connector
 {
 
 

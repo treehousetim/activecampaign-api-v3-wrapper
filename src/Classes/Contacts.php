@@ -1,19 +1,11 @@
-<?php
+<?php namespace treehousetim\ActiveCampaign\Classes;
 
-namespace Dhrechanyi\ActiveCampaign\Classes;
-
-use Dhrechanyi\ActiveCampaign\Connector;
-
-
-class Contacts extends Connector
+class Contacts extends \treehousetim\ActiveCampaign\Connector
 {
-
-
 	public function get($contact_id = null)
 	{
 		return $this->request('GET', 'contacts/' . strval($contact_id));
 	}
-
 
 	public function getByList($list_id)
 	{
@@ -116,6 +108,4 @@ class Contacts extends Connector
 	{
 		return $this->request('POST', 'contactLists', ['contactList' => $params]);
 	}
-
-
 }

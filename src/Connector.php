@@ -1,6 +1,4 @@
-<?php
-
-namespace Dhrechanyi\ActiveCampaign;
+<?php namespace treehousetim\ActiveCampaign;
 
 
 use GuzzleHttp\Client;
