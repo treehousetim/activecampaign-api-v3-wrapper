@@ -1,10 +1,9 @@
 <?php namespace treehousetim\ActiveCampaign;
 
-
 class ActiveCampaign
 {
-	private $base_url;
-	private $api_key;
+	protected $base_url;
+	protected $api_key;
 
 	public function __construct( $base_url = null, $api_key = null )
 	{
@@ -36,5 +35,4 @@ class ActiveCampaign
 	{
 		return new Classes\CustomFields( $this->base_url, $this->api_key );
 	}
-
 }
