@@ -1,8 +1,8 @@
 # ActiveCampaign API v3 Wrapper
 
 
-Wrapper for ActiveCampaign API v3.\
-Allows to make calls in ActiveCampaign services and work with data, using PHP. Simple and easy to use. \
+Wrapper for ActiveCampaign API v3.
+Allows to make calls in ActiveCampaign services and work with data, using PHP. Simple and easy to use.
 Services available so far:
 - Lists
 - Contacts
@@ -16,19 +16,19 @@ https://developers.activecampaign.com/v3/reference
 
 **ActiveCampaign API v3 Wrapper** is available on Packagist. Just add this line to your **composer.json** file in **require** section
 
-```c
-"dhrechanyi/activecampaign-api-v3-wrapper": "^1.0"
+```json
+"treehousetim/activecampaign-api-v3-wrapper": "^1.0"
 ```
 
 or open terminal window and run
 
-```c
-composer require dhrechanyi/activecampaign-api-v3-wrapper
+```bash
+composer require treehousetim/activecampaign-api-v3-wrapper
 ```
 
 ## Usage
 
-Wrapper allows you to chain methods and use singe instance to apply all needed filters and queries.
+Wrapper allows you to chain methods and use a single instance to apply all needed filters and queries.
 
 ### Setup
 
@@ -38,16 +38,20 @@ Wrapper allows you to chain methods and use singe instance to apply all needed f
 // include required classes
 require 'vendor/autoload.php';
 
-// add namespace
-use Dhrechanyi\ActiveCampaign\ActiveCampaign;
+use treehousetim\ActiveCampaign\ActiveCampaign;
 
-// create wrapper instance
-$ac = new ActiveCampaign('YOUR_ACTIVE_CAMPAIGN_URL', 'YOUR_ACTIVE_CAMPAIGN_KEY');
+// using hard coded values
+$ac = new ActiveCampaign( 'ACTIVE_CAMPAIGN_URL', 'ACTIVE_CAMPAIGN_KEY');
+
+// using environment variables
+$ac = new ActiveCampaign();
 ```
+
+**Using Environment Variables requires entries in a .env file or in your environment**
 
 ### Get service models
 
-To get access to activecampaign api endpoints, you need to create service model first. Here is how you can do it:
+To get access to the active campaign api endpoints, you will need to create a service model first.
 
 ```php
 // lists
@@ -58,43 +62,51 @@ $contacts = $ac->contacts();
 
 // tags
 $tags = $ac->tags();
+
+// custom fields
+$fields = $ac->customFields();
+
 ```
 
 ### Basic example
 
-To retrieve all lists, call for the `->all()` method. This method should be always at the very end of your chain sequence:
+To retrieve all lists, call the `->all()` method. This method should be always at the very end of your chain sequence:
 
 ```php
 $lists = $ac->lists()->all();
 ```
-_Note that by default, activecampaign api returns 20 items. To change that, you need to use `pagination()` method_
-
+_Note that by default the Active Campaign API returns 20 items._
 
 ### Pagination
 
-https://developers.activecampaign.com/v3/reference#pagination \
+https://developers.activecampaign.com/reference/pagination
+
 Pagination allows you to get needed amount of items and make offsets.
+Note the API limit is 100 items max.
+
 
 ```php
-// ->paginate($limit, $offset = 0)
 
-// fetch 50 lists
-$paginated_lists = $ac->lists()->paginate(50)->all();
+// fetch the first 50 lists
+$limit = 50;
+$offset = 0;
+
+$paginated_lists = $ac->lists()->paginate( $limit, $offset )->all();
 ```
 
 ### Sorting
 
-https://developers.activecampaign.com/v3/reference#section-ordering \
+https://developers.activecampaign.com/v3/reference#section-ordering
 You can sort results in needed order. Use `->orderby()` method and pass as argument an array, where key is the name of field and value is order (asc or desc).
  
 ```php
 // get all contacts and sort them by email in asc order and by last name in desc order
-$contacts = $ac->contacts()->order(['email' => 'asc', 'lastName' => 'desc'])->all();
+$contacts = $ac->contacts()->orderby( ['email' => 'asc', 'lastName' => 'desc'] )->all();
 ```
 
 ### Filtering
 
-https://developers.activecampaign.com/v3/reference#section-filtering \
+https://developers.activecampaign.com/v3/reference#section-filtering
 You can filter results by multiple parameters. Use `->filter()` method and pass an array as argument, where key is parameter name and value is parameter value.
 
 ```php
@@ -151,63 +163,4 @@ $ac->contacts()->addTag([
 
 
 ```
-
-## Available methods
-
-### Lists
-
-https://developers.activecampaign.com/v3/reference#lists
-
-| Method | Description |
-| --- | --- |
-| get($list_id) | Get list by ID |
-| all() | Get all lists |
-| create($params) | Create list https://developers.activecampaign.com/reference#create-new-list |
-| createGroup($params) | Create list group permission https://developers.activecampaign.com/reference#create-a-list-group-permission |
-| delete($list_id) | Delete list by ID |
-
-_NOTE: When creating a new list, it is important to then associate that list to a group permission_
-
-### Contacts
-
-https://developers.activecampaign.com/v3/reference#contact
-
-| Method | Description |
-| --- | --- |
-| get($contact_id) | Get contact by ID |
-| getByList($list_id) | Get contacts by list ID |
-| getByTag($tag_id) | Get contacts by tag ID |
-| getByEmail($email) | Get contact by email |
-| all() | Get all contact |
-| create($params) | Create contact https://developers.activecampaign.com/reference#create-contact |
-| createOrUpdate($params) | Create contact or update if it's already exists (sunc by email) https://developers.activecampaign.com/reference#create-contact-sync |
-| update($contact_id, $params) | Update contact https://developers.activecampaign.com/reference#update-a-contact |
-| delete($contact_id) | Delete contact by ID |
-| getCustomFieldValue($custom_field_id) | Get custom field value |
-| allCustomFieldValues() | Get all custom fields values |
-| createCustomFieldValue($params) | Create custom field value https://developers.activecampaign.com/reference#retrieve-fields |
-| addTag($params) | Add tag to contact https://developers.activecampaign.com/reference#create-contact-tag |
-| deleteTag($contact_tag_id) | Delete tag from contact |
-| getTags($contact_id) | Get all contact's tags |
-| getLists($contact_id) | Get all contact's lists |
-| updateListStatus($params) | Update list status on contact https://developers.activecampaign.com/reference#update-list-status-for-contact |
-| getContactFieldValues($contact_id) | Get contact field values |
-| updateCustomFieldValue($custom_field_id, $params) | Update contact custom field value |
-
-### Tags
-
-https://developers.activecampaign.com/reference#tags
-
-| Method | Description |
-| --- | --- |
-| get($tag_id) | Get tag by ID |
-| all() | Get all tags |
-| create($params) | Create tag https://developers.activecampaign.com/reference#create-a-new-tag |
-| update($tag_id, $params) | Update tag https://developers.activecampaign.com/reference#update-a-tag |
-| delete($tag_id) | Delete tag by ID |
-
-
-
-
-
 
