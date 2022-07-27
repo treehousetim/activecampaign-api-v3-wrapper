@@ -7,6 +7,7 @@ Services available so far:
 - Lists
 - Contacts
 - Tags
+- Custom Fields
 
 ## Official API documentation
 
