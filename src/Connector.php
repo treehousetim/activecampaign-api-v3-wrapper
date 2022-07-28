@@ -8,7 +8,6 @@ use GuzzleHttp\Exception\ServerException;
 
 class Connector
 {
-
 	protected $base_url;
 	protected $api_key;
 	protected $paginate_params = [];
