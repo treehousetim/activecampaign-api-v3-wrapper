@@ -37,16 +37,17 @@ class Contacts extends \treehousetim\ActiveCampaign\Connector
 		return $this->request('POST', 'contact/sync', ['contact' => $params]);
 	}
 
-	public function formatFieldValues( array $fields ) : array
+	public function formatFieldValues( array $_fields ) : array
 	{
 		$fields = [];
-		foreach( $fields as $id => $value )
+		foreach( $_fields as $id => $value )
 		{
 			$fields[] = [
 				'field' => $id,
 				'value' => $value,
 			];
 		}
+
 		return $fields;
 	}
 
