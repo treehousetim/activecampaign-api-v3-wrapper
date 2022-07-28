@@ -19,7 +19,7 @@ class Connector
 
 	public function __construct( $base_url = null, $api_key = null )
 	{
-		$this->base_url = rtrim( $base_url ?? getenv( 'ACTIVE_CAMPAIGN_URL' ), '/' ) . '/';
+		$this->base_url = rtrim( $base_url ?? getenv( 'ACTIVE_CAMPAIGN_URL' ), '/' ) . '/api/3/';
 		$this->api_key = $api_key ?? getenv( 'ACTIVE_CAMPAIGN_KEY' );
 
 		if( $this->base_url === null || $this->api_key === null )
