@@ -28,14 +28,14 @@ class Connector
 		}
 	}
 
-	public function paginate($limit, $offset = 0)
+	public function paginate( $limit, $offset = 0 )
 	{
 		$this->paginate_params = ['limit' => $limit, 'offset' => $offset];
 
 		return $this;
 	}
 
-	public function filter($values)
+	public function filter( array $values )
 	{
 		foreach($values as $key => $value){
 			$this->filter_params['filters[' . $key . ']'] = $value;
@@ -44,14 +44,14 @@ class Connector
 		return $this;
 	}
 
-	public function query($values)
+	public function query( array $values )
 	{
 		$this->query_params = $values;
 
 		return $this;
 	}
 
-	public function orderby($values)
+	public function orderby( array $values )
 	{
 		foreach($values as $key => $value){
 			$this->orderby_params['orders[' . $key . ']'] = $value;
@@ -60,7 +60,7 @@ class Connector
 		return $this;
 	}
 
-	protected function buildUrl($endpoint)
+	protected function buildUrl( $endpoint ) : string
 	{
 		$query = http_build_query(array_merge($this->query_params, $this->filter_params, $this->orderby_params, $this->paginate_params));
 
