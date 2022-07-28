@@ -15,7 +15,6 @@ class Connector
 	protected $query_params = [];
 	protected $orderby_params = [];
 
-
 	public function __construct( $base_url = null, $api_key = null )
 	{
 		$this->base_url = rtrim( $base_url ?? getenv( 'ACTIVE_CAMPAIGN_URL' ), '/' ) . '/api/3/';
@@ -76,6 +75,4 @@ class Connector
 
 		return json_decode($request->getBody()->getContents(), true);
 	}
-
-
 }
